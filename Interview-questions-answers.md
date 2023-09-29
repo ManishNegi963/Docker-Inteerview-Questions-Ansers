@@ -104,6 +104,8 @@ This will pull the mysql:latest image from dockerhub.
 
  <img width="531" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/200d217e-66e8-414a-89c7-e0fd472ed280">
 
+- **
+
    -it refers to interactive terminal
 
 - **
