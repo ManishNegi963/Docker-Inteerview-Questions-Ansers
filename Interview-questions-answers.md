@@ -108,6 +108,90 @@ This will pull the mysql:latest image from dockerhub.
 
    -it refers to interactive terminal
 
-- **
-    
+- **Basics of Dockerfile by building a image and container of java app**
+
+      vim Hello.java
+
+  <img width="450" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/2da73fb0-7230-47c5-a79c-f36705361eb6">
+
+    Code of application inside the Hello.java file
+
+    - Creating Dockerfile for builing image of java-app
+
+             # Getting base image
+              FROM openjdk:11
+          
+              # Creating Working directory where all the code will be kept
+              WORKDIR /app
+              
+              # Copying the code to the current directory of the container
+              COPY Hello.java .
+              
+              # Compiling the code
+              RUN javac Hello.java
+              
+              #Run the compiled code
+              CMD ["java","Hello"]
+
+   <img width="467" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/3204d5c7-7358-4d9b-b613-9b5b53a383d4">
+
+   - Building image from Dockerfile
+ 
+         docker build . -t java-app
+
+     <img width="602" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/c33178e9-26b8-4d44-bd5d-685309cc208d">
+
+      -t refers to tag
+
+     Image has been made from Dockerfile
+
+     <img width="510" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/ec102b66-ea6c-4c53-bdd5-31ff05644b15">
+
+    - Run the image to make container
+ 
+          docker run -d java-app
+ 
+      <img width="470" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/0c00caa0-00d5-459a-b8ba-16ed8708a105">
+
+      -d refers to detach mode/background
+
+- **RUN VS CMD in Dockerfile**
+
+     In a Dockerfile, both `RUN` and `CMD` are instructions, but they serve different purposes:
+
+1. **`RUN` Instruction:**
+   - Used to execute commands during the build process.
+   - Any command that needs to be executed during the creation of the image should be specified with `RUN`.
+   - Examples include installing dependencies, setting up the environment, and other commands that contribute to building the image.
+
+   ```Dockerfile
+   FROM ubuntu:latest
+
+   RUN apt-get update \
+       && apt-get install -y python3 \
+       && apt-get clean \
+       && rm -rf /var/lib/apt/lists/*
+   ```
+
+   In this example, the `RUN` instruction is used to update the package list, install Python 3, clean up, and remove unnecessary files.
+
+2. **`CMD` Instruction:**
+   - Used to provide a default command for an executing container.
+   - It specifies the command and its parameters to run when the container starts.
+   - There can only be one `CMD` instruction in a Dockerfile.
+   - If the Dockerfile has multiple `CMD` instructions, only the last one is effective.
+
+   ```Dockerfile
+   FROM python:3.9
+
+   WORKDIR /app
+
+   COPY . .
+
+   CMD ["python", "app.py"]
+   ```
+
+   In this example, the `CMD` instruction specifies that when a container is started from the image, it should run the Python script `app.py`.
+
+In summary, `RUN` is used for executing commands during the build phase to set up the environment, while `CMD` is used to specify the default command to run when a container is started from the image. It's common to use `RUN` for setting up the environment, installing dependencies, etc., and `CMD` for specifying the default command that starts your application.
   
