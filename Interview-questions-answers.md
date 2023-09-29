@@ -62,16 +62,50 @@
 
 In practice, both Docker and VMs are often used together in a complementary way. Docker containers can run within VMs, providing an additional layer of abstraction and flexibility. The choice between Docker and VMs depends on the specific requirements and characteristics of the applications and infrastructure you are working with.
 
-- What is Docker engine?
+- **What is Docker engine?**
 
   Docker engine is a application to build, package and run containarized application with having all the code and dependencies and libraries needed to run the application in a isolated environment.
 
   Components of Docker engine.
 
-    * Docker d (docker daemon) : It is a background process which manages the containers on high level and it manages the docker objects like images, volumes, container, network using container d on low level(code level: like executing the code in reference to manging the containers)
+    * **Docker d (docker daemon)** : It is a background process which manages the containers on high level and it manages the docker objects like images, volumes, container, network using container d on low level(code level: like executing the code in reference to manging the containers)
     
-    * Docker CLI: It is a command line interface which allow user to interact with docker daemon and issue commands to manage image, container etc.
+    * **Docker CLI** : It is a command line interface which allow user to interact with docker daemon and issue commands to manage image, container etc.
     
-    * Container d: It manages the execution of container on low level, It handles the comlete lifecycle of creation, execution and destruction of containers. It manages the distribution of container images. This involves pulling container images from container registries (such as Docker Hub) and storing them locally.  
+    * **Container d** : It manages the execution of container on low level, It handles the comlete lifecycle of creation, execution and destruction of containers. It manages the distribution of container images. This involves pulling container images from container registries (such as Docker Hub) and storing them locally.  
 
+- **How to install docker in Ubuntu?
+
+      sudo apt install docker.io
+
+<img width="596" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/424ae731-f868-4b19-9526-e577253a378d">
+
+- **How to make & run mysql container in docker?**
+
+      docker pull mysql:latest
+
+  <img width="579" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/dc1effee-ed8d-4b1e-842e-07b66b0434f6">
+
+This will pull the mysql:latest image from dockerhub.
+
+  * Run the image to make container and set environment variable for mysql
+
+        docker run -d -e MYSQL_ROOT_PASSWORD=test@123 mysql:latest
+
+<img width="778" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/bc4567aa-fd35-48d4-9663-18a2ba63d66c">
+
+  -e refers to environment variable
+
+  <img width="849" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/81b60593-993d-4f0d-ae4c-078c6bad4304">
+
+  * Go inside the container
+
+        docker exec -it 0b9127049bcf sh
+
+ <img width="531" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/200d217e-66e8-414a-89c7-e0fd472ed280">
+
+   -it refers to interactive terminal
+
+- **
+    
   
