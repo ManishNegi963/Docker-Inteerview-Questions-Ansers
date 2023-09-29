@@ -194,4 +194,45 @@ This will pull the mysql:latest image from dockerhub.
    In this example, the `CMD` instruction specifies that when a container is started from the image, it should run the Python script `app.py`.
 
 In summary, `RUN` is used for executing commands during the build phase to set up the environment, while `CMD` is used to specify the default command to run when a container is started from the image. It's common to use `RUN` for setting up the environment, installing dependencies, etc., and `CMD` for specifying the default command that starts your application.
+
+- **What is the use of publish?**
+
+  - Dockerfile for flaskapp
+
+        # Getting base image
+        FROM python:3.9
+        
+        # Creating a working directory
+        WORKDIR /app
+        
+        # copying the code to working directory
+        COPY app.py .
+        
+        # installing the required libraries
+        RUN pip install flask
+        
+        # run the application
+        CMD ["python","app.py"]
+
+    - Running the image with publishing the host port with container port
+
+          docker run -d -p 5000:5000 flask-app:latest
+
+   -p refers to publish, used to bind host port to the container port.
+
+   <img width="682" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/7a783e62-3bb3-46b4-9fec-b108d7b5cee0">
+
+   - After binding the port don't forget to edit inbound rules in security group and add rule port number on custom tcp to allow traffic on port number specified. 
+
+    <img width="368" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/a2d83c5b-28ff-483a-a2ee-b6d196d145c3">
+
+  
+- **What are the scenarios in which your container is accessable or not accessable?**
+
+- No PORT Exposed
+
+- EXPOSE 8000
+
+- -p 5000:5000
+  
   
