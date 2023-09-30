@@ -233,7 +233,7 @@ In summary, `RUN` is used for executing commands during the build phase to set u
 
    - EXPOSE 8000 : In this scenario, the container is exposing the port and other conatainer can connect to that port but not the host port. 
 
-   - -p 5000:5000 : In this scenario, 5000(host port):5000 (container port), container port is exposed and mapped to host port.
+   - -p 5000:5000 : In this scenario, 5000(container port):5000 (host port), container port is exposed and mapped to host port.
  
 -**Use case of publish port**
 
@@ -276,7 +276,45 @@ In summary, `RUN` is used for executing commands during the build phase to set u
     tar  balls or copying from URLs, you might choose ADD. However, be aware that using ADD for simple copying can lead to unexpected behavior, and it's generally considered good practice 
     to use COPY for clarity and transparency in your Dockerfiles.
 
+- ** How to create custom nginx Docker image and deploy a static web page**
+
+    - Create custom index.html
+ 
+                <!DOCTYPE html>
+          <html>
+          <head>
+                  <title> Week16 LUIT Project </title>
+          </head>
+          <body>
+                  <body style=text-align:center;background-color:red;font-weight:900;font-size:20px;font-family:Helvetica,Arial,sans-serif>
+                  <img src="https://www.docker.com/wp-content/uploads/2022/03/Moby-logo.png">
+                  <h1> Welcome to my custom nginx webpage hosted in a Docker container </h1>
+                  <p> This container was deployed: <div id="date"></div></p>
+          <script>
+                  var date = new Date();
+                  document.getElementById("date").innerHTML=date.toLocaleString();
+          </script>
+          </body>
+          </html>
+
+      - Create Dockerfile
+     
+            #Getting image
+            FROM nginx
+            
+            # Copying the index.html local file to container
+            COPY index.html /usr/share/nginx/html
+            
+            # Exposing port
+            EXPOSE 8080
+
+        - Build image and make container
+       
+          <img width="852" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/6b8a890a-d57f-486d-b1b5-4cc392a1bf59">
+
+        - Add Inbound rule 8080 and Custom static web page has been deployed
+       
+          <img width="1094" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/e1e3a0cd-f255-458c-8a2e-f95599e7e38a">
+ 
 - **
-
-
 
