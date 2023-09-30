@@ -227,12 +227,56 @@ In summary, `RUN` is used for executing commands during the build phase to set u
     <img width="368" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/a2d83c5b-28ff-483a-a2ee-b6d196d145c3">
 
   
-- **What are the scenarios in which your container is accessable or not accessable?**
+- **What are the scenarios in which your container is accessable or not accessable?** (IMPORTANT)
 
-- No PORT Exposed
+   - No PORT Exposed : In this scenario. there isn't any port exposed in the Dockerfile and no port exposed in the docker run command, so no port are accessable in the container and port are attached to host.
 
-- EXPOSE 8000
+   - EXPOSE 8000 : In this scenario, the container is exposing the port and other conatainer can connect to that port but not the host port. 
 
-- -p 5000:5000
+   - -p 5000:5000 : In this scenario, 5000(host port):5000 (container port), container port is exposed and mapped to host port.
+ 
+-**Use case of publish port**
+
+  Dockerfile of nodejs-app
+
+              FROM node:12.2.0-alpine
+              WORKDIR app
+              COPY . .
+              RUN npm install
+              RUN npm run test
+              EXPOSE 8000
+              CMD ["node","app.js"]
+
+  - Build the image from Dockerfile
+
+        docker build . -t nodjs-app
+
+  <img width="678" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/858c8c71-4cb0-41b4-b4f1-21ed0c64fbc8">
+
+  - Run the image to make container and publish the container port and map to host port.
+
+        docker run -d -p 8000:8000 nodejs-app
   
-  
+      <img width="833" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/17e6da22-48b6-4f43-8dc2-63b5bc249588">
+
+    After that open the traffic to port 8000, by add inbound rule in security group.
+
+    <img width="381" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/dc6dafaa-418d-4793-8d80-379dea1f3352">
+
+
+
+- **Difference between ADD & COPY?**
+
+    - COPY: It is used to copy local file to the container.
+
+    - ADD: It is also use to copy file from local to the container. It can automatically extract tarballs (files with extensions like .tar, .tar.gz, .tar.bz2, etc.) during the copy 
+      process. It can copy files from a URL.
+
+    In general, if you are only copying local files and want to ensure clarity and simplicity, it's recommended to use COPY. If you need to handle more complex scenarios like extracting 
+    tar  balls or copying from URLs, you might choose ADD. However, be aware that using ADD for simple copying can lead to unexpected behavior, and it's generally considered good practice 
+    to use COPY for clarity and transparency in your Dockerfiles.
+
+- **
+
+
+
