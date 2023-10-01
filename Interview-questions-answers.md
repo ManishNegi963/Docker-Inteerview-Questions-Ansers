@@ -449,3 +449,18 @@ In summary, `RUN` is used for executing commands during the build phase to set u
 
   <img width="594" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/e7f1379a-3496-40a6-a357-1ecdb09e645b">
 
+
+-** What is the docker home path/directory?**
+
+ In Linux:
+
+Docker binaries and related files are typically installed in /usr/bin/ or /usr/local/bin/.
+Docker images and containers are stored in /var/lib/docker/.
+
+- **Docker networking**
+
+   
+
+ 
+  
+
