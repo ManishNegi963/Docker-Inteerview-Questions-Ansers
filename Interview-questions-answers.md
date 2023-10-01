@@ -417,3 +417,35 @@ In summary, `RUN` is used for executing commands during the build phase to set u
   -IMage has been pushed tp dockerHUb
 
   <img width="599" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/d79cfba6-a27c-447e-baca-a4211f631f8a">
+
+-** WHat is docker volume? How to persist data in docker container?**
+
+  - Creating volume
+    
+    docker volume create --name django-todo-volume --opt type=none --opt device=/home/ec2-user/volume/django-todo-volume --opt o=bind
+
+  --name refers to name of the volume 
+  --opt refers to option
+  type refers to type of volume
+  device refers to location of the volume 
+  o=bind refers to any changes in the container will reflect to the volume on local and vice-versa.
+ 
+ <img width="607" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/15efaadf-13de-441d-a106-2bcec3ea1c31">
+
+  - Mount the volume created to container
+
+        docker run -d --mount source=django-todo-volume,target=/data -p 8000:8000 django-todo
+
+    --mount refers to mounting the volume to container source refers to volume created and target refers to container
+
+ <img width="608" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/b4ce56e3-1b0e-415e-a7f2-5707e509cf5d">
+
+  - Created a file inside the container and check if the container data will be available in local
+
+     <img width="602" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/31fa0d51-5cfc-4627-be76-44565484d517">
+
+
+ -  Data binded to local volume
+
+  <img width="594" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/e7f1379a-3496-40a6-a357-1ecdb09e645b">
+
