@@ -104,8 +104,6 @@ This will pull the mysql:latest image from dockerhub.
 
  <img width="531" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/200d217e-66e8-414a-89c7-e0fd472ed280">
 
-- **
-
    -it refers to interactive terminal
 
 - **Basics of Dockerfile by building a image and container of java app**
@@ -316,5 +314,49 @@ In summary, `RUN` is used for executing commands during the build phase to set u
        
           <img width="1094" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/e1e3a0cd-f255-458c-8a2e-f95599e7e38a">
  
-- **
+- **What is Docker compose**
 
+   DOcker compose is used to buikd and deploy the services at once.
+  Docker compose file for two-tier application.
+
+       services:
+      
+        backend:
+          build:
+            context: .
+          ports:
+            - "5000:5000"
+          environment:
+            MYSQL_HOST: mysql
+            MYSQL_USER: admin
+            MYSQL_PASSWORD: admin
+            MYSQL_DB: myDb
+          depends_on:
+            - mysql
+      
+        mysql:
+          image: mysql:5.7
+          environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: myDb
+            MYSQL_USER: admin
+            MYSQL_PASSWORD: admin
+          volumes:
+            - ./message.sql:/docker-entrypoint-initdb.d/message.sql   # Mount sql script into container's /docker-entrypoint-initdb.d directory to get table automatically created
+            - mysql-data:/var/lib/mysql  # Mount the volume for MySQL data storage
+      
+      volumes:
+        mysql-data:
+
+  depemds_on refers to backend service will build after mysql
+
+      docker-compose up -d 
+
+ This will build and deploy the services mentioned in docker compose file.
+
+
+     docker-compose down
+
+  This will stop all the services of docker compose file.
+
+-**
