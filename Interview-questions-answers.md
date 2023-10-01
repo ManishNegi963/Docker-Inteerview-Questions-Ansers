@@ -359,4 +359,61 @@ In summary, `RUN` is used for executing commands during the build phase to set u
 
   This will stop all the services of docker compose file.
 
--**
+-**How to reduce size of image?**
+
+   - Using multi stage docker
+
+     First make docker file of flask app
+
+          FROM python:3.9
+          WORKDIR /app
+          COPY . .
+          RUN pip install flask
+          CMD ["python","app.py"]
+
+     Build the image and check the size.
+
+     <img width="539" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/52dd0402-5bd9-496c-a32d-69cb9cdfd8fb">
+
+  - Create stages in docke file
+
+          #Stage 1
+          FROM python:3.9 AS big-stage
+          WORKDIR /app
+          COPY . .
+          #stage 2
+          FROM python:3.9-slim-bullseye
+          
+          #copying the data in /app in working directory to /app in current directory
+          COPY --from=big-stage /app /app
+          RUN pip install flask
+          CMD ["python","app.py"]
+
+    - Build and check image size
+   
+       <img width="613" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/71f87d94-e809-4ace-9653-b432f5c99dcf">
+
+-** How to ppush imaages to DockerHub?**
+
+   - First login
+
+         docker login 
+
+  <img width="603" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/9f3e797f-7533-4f83-8b90-ed7f97f441f8">
+
+  - Tag the image
+
+        docker image tag multi-stage-flask-app mnmanish/multistage-flask-app
+
+     <img width="611" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/0191707e-7350-41d1-ac84-26d737caa711">
+
+
+  - Push to DockerHub
+
+         docker push mnmanish/multistage-flask-app
+
+    <img width="596" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/82f0a47b-2d49-4894-926c-1d5232ae5312">
+
+  -IMage has been pushed tp dockerHUb
+
+  <img width="599" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/d79cfba6-a27c-447e-baca-a4211f631f8a">
