@@ -457,7 +457,8 @@ In summary, `RUN` is used for executing commands during the build phase to set u
 Docker binaries and related files are typically installed in /usr/bin/ or /usr/local/bin/.
 Docker images and containers are stored in /var/lib/docker/.
 
-- **Docker networking**
+- **CMD vs ENTRYPOINT**
+  
 
    
 
