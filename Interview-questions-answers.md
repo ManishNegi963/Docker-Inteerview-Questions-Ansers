@@ -458,6 +458,66 @@ Docker binaries and related files are typically installed in /usr/bin/ or /usr/l
 Docker images and containers are stored in /var/lib/docker/.
 
 - **CMD vs ENTRYPOINT**
+
+   Certainly! Let's walk through a complete example with both the Dockerfile and the Python script.
+    
+    1. **Create the Python Script (`app.py`):**
+    
+    ```python
+    # app.py
+    import sys
+    
+    greeting = sys.argv[1] if len(sys.argv) > 1 else "Hello"
+    name = sys.argv[2] if len(sys.argv) > 2 else "World"
+    print(f"{greeting}, {name}!")
+    ```
+    
+    2. **Create the Dockerfile:**
+    
+    ```dockerfile
+    # Dockerfile
+    FROM python:3.8
+    
+    COPY app.py /app.py
+    
+    # Using ENTRYPOINT to set the main executable
+    ENTRYPOINT ["python", "/app.py"]
+    
+    # Using CMD to provide default values for greeting and name
+    CMD ["Hi", "Docker"]
+    ```
+    
+    In this Dockerfile:
+    
+    - `ENTRYPOINT` sets the main executable to `python /app.py`.
+    - `CMD` provides default values for the greeting and name. If no additional command-line arguments are provided, it defaults to "Hi" and "Docker."
+    
+    3. **Build the Docker Image:**
+    
+    Navigate to the directory containing both the `app.py` script and the Dockerfile and run:
+    
+    ```bash
+    docker build -t my-python-app .
+    ```
+    
+    4. **Run the Docker Container:**
+    
+    Run the container without providing additional command-line arguments:
+    
+    ```bash
+    docker run my-python-app
+    # Output: Hi, Docker!
+    ```
+    
+    Run the container with custom command-line arguments:
+    
+    ```bash
+    docker run my-python-app Hello GPT-3
+    # Output: Hello, GPT-3!
+    ```
+    
+    This example demonstrates how you can use both `ENTRYPOINT` and `CMD` to set up default behavior for your containerized application while still allowing users to provide custom values 
+  through command-line arguments.
   
 
    
