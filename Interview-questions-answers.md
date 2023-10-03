@@ -598,4 +598,11 @@ Docker images and containers are stored in /var/lib/docker/.
 
   <img width="369" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/1eaa158e-884e-4095-b809-e568c0e1343e">
 
+-**which command is used to connect/disconnect an running container to existing network?**
+
+    docker network connect my-net nginx1
+
+ to disconnect the container from network
+
+     docker network disconnect my-net nginx1
 
