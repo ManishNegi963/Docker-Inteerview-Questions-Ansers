@@ -518,10 +518,84 @@ Docker images and containers are stored in /var/lib/docker/.
     
     This example demonstrates how you can use both `ENTRYPOINT` and `CMD` to set up default behavior for your containerized application while still allowing users to provide custom values 
   through command-line arguments.
-  
 
+
+-**Docker networking: Bridge vs Host network **
+
+  - Why does container using host network does not have any ip address of container?
+
+     Lets make a container of nginx and run
+
+        docker run -d --name nginx nginx
+
+      --name refers to the name given to container
+
+    - By default when we make a container it gets attach to bridge network.(default bridge)
+
+    <img width="490" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/92ed6f71-103e-44b8-8168-8a3e26f2df57">
+
+    -But it won't be able to access the internet until we publish the the container port to host port.
+
+    <img width="613" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/1d514763-29c6-4684-8a13-57fa406e93b1">
+
+    - Run the container and publish the port (mapping the container port with the host port)
    
+          docker run -d -p 80:80 --name nginx nginx
 
- 
+      <img width="791" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/43199bab-94c9-4e25-810f-44e8c63e8c47">
+
   
+    - While using -p to publish the container ip to host ip in order to access the internet, if we want to access the internet on container without publishing th port, we can use host network directly while using docker run command.
+   
+      Let's attach host network instead of by default bridge network to container.
+
+          docker run -d --name nginx --network host nginx
+
+     --network refers to specify the host network as default network for container instead of bridge network
+
+    <img width="707" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/02a29210-f368-4d28-9095-82206c1ecf3f">
+
+
+    NOTE:
+     nginx container is running on host network but there is no ip address of container, as it only assigns ip address to container when we run the container on by default bridge network, but now it is using the host ip address to access the internet.
+
+
+-**Use case of Custom default bridge using microservices. How to integrate nodejs application running on EC2 intsance with mongo db running on container?**
+
+  - Creating custom bridge
+
+        docker network create my-net
+
+    - Running the container on custom bridge
+
+          docker run -d -p 5000:5000 --name my-ctr --network my-net micro-serv
+
+  
+    - container my-ctr using custom bridge my-net
+  
+   <img width="435" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/27914820-d42a-42fc-aa60-7fe7b5a77833">
+
+
+  container running on custom bridge
+
+  <img width="475" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/637dc508-99cd-4767-bf16-a3c3ad0021a9">
+
+ containers running on -my-net custom bridge network
+
+ <img width="661" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/f529f92a-dfff-4d34-b935-65d63b735dbf">
+
+ conatiners running on same network a=can access each other
+
+ <img width="774" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/3682ed9c-ed1f-450d-8ecd-b27dabcabb71">
+
+  But not able to access the container on another network
+
+  <img width="309" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/b5175c8f-4a9c-44d5-ba2d-504005d90986">
+
+  And this is how we can achieve network isolation.
+
+  Insatll mongo db on custome bridge network my-net
+
+  <img width="369" alt="image" src="https://github.com/ManishNegi963/Docker-Inteerview-Questions-Ansers/assets/124788172/1eaa158e-884e-4095-b809-e568c0e1343e">
+
 
